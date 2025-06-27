@@ -3,35 +3,22 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "dummy-fastapi"
-version = "1.0.0"
-description = "A minimal FastAPI application"
-authors = [
-    {name = "Riabchenko Aleksandr", email = "ra@topor.tech"}
-]
-readme = "README.md"
+name = "python-monorepo-template"
+version = "0.1.0"
+description = "Python monorepo template"
 requires-python = ">=3.12"
-dependencies = [
-    "fastapi>=0.104.0",
-    "uvicorn[standard]>=0.24.0",
-]
 
 [project.optional-dependencies]
 dev = [
+    "pre-commit>=3.5.0",
     "ruff>=0.12.1",
     "mypy>=1.16.1",
 ]
 
-[project.scripts]
-dummy-fastapi = "dummy_fastapi.app:main"
-
-[tool.hatch.build.targets.wheel]
-packages = ["dummy_fastapi"]
-
 [tool.ruff]
 target-version = "py312"
 line-length = 88
-lint.select = [
+select = [
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings
     "F",  # pyflakes
@@ -40,6 +27,12 @@ lint.select = [
     "C4", # flake8-comprehensions
     "UP", # pyupgrade
 ]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+]
+
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
@@ -65,5 +58,7 @@ strict_equality = true
 module = [
     "fastapi.*",
     "uvicorn.*",
+    "pytest.*",
+    "httpx.*",
 ]
-ignore_missing_imports = false
+ignore_missing_imports = true
